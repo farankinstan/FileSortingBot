@@ -58,7 +58,29 @@ def settings(set):
     else:
         return 0
 
+def transfer(file, path):
+    b = True
 
+    filel = file.split(".")
+
+    while b:
+        try:
+            shutil.move(file, path)
+            b = False
+
+        except:
+            filel[-2] = filel[-2] + "1"
+            filen = ".".join(filel)
+
+            filel = filen.split(".")
+
+            os.rename(file,filen)
+            os.remove(file)
+
+            file = filen
+
+
+            
 
 
 
@@ -114,43 +136,43 @@ def main(down, music, video, ins , docs, py, image, torr, zip, dis):
         try:
             #получаем расширение файлов
             extl = i.split('.')
-            ext = i.split('.')[-1]
+            ext = extl[-1]
 
             #переносим в нужную папку файл с нужным расширением
             if ext in extensions['audio']:
-                shutil.move(down + '\\' + i, music)
+                transfer(down + '\\' + i, music)
 
             #переносим в нужную папку файл с нужным расширением
             elif ext in extensions['exe']:
-                shutil.move(down + '\\' + i, ins)
+                transfer(down + '\\' + i, ins)
 
             #переносим в нужную папку файл с нужным расширением
             elif ext in extensions['presentation'] or ext in extensions['spreadsheet'] or ext in extensions['data'] or ext in extensions['text']:
-                shutil.move(down + '\\' + i, docs)
+                transfer(down + '\\' + i, docs)
 
             #переносим в нужную папку файл с нужным расширением
             elif ext in extensions['image']:
-                shutil.move(down + '\\' + i, image)
+                transfer(down + '\\' + i, image)
                 
             #переносим в нужную папку файл с нужным расширением
             elif ext in extensions['archive']:
-                shutil.move(down + '\\' + i, zip)
+                transfer(down + '\\' + i, zip)
 
             #переносим в нужную папку файл с нужным расширением
             elif ext in extensions['video'] or ext in extensions['gif']:
-                shutil.move(down + '\\' + i, video)
+                transfer(down + '\\' + i, video)
 
             #переносим в нужную папку файл с нужным расширением
             elif ext == 'torrent':
-                shutil.move(down + '\\' + i, torr)
+                transfer(down + '\\' + i, torr)
 
             #переносим в нужную папку файл с нужным расширением
             elif ext == 'py' or ext == 'pyw':
-                shutil.move(down + '\\' + i, py)
+                transfer(down + '\\' + i, py)
 
             #переносим в нужную папку файл с нужным расширением
             elif extl[-2] in extensions["theme"]:
-                shutil.move(down + '\\' + i, dis)
+                transfer(down + '\\' + i, dis)
 
         except:
             pass
