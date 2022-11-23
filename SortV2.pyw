@@ -5,11 +5,16 @@ import json
 
 Directories = {}
 
-def Data(emperor = False):
+def Data(emperor = False, load = False):
     global Directories
     
     if not emperor:
         emperor = os.environ.get("USERNAME")
+
+    if load:
+        Directories = load
+        return
+
 
     Directories = {
         "target" : f"C:\\Users\\{emperor}\\Downloads",
@@ -66,10 +71,10 @@ def Create():
             jsn = json.load(file)
 
             if os.environ.get("USERNAME") != jsn["user"]:
-                Data(jsn["user"])
+                Data(jsn["user"], jsn)
                 return
 
-            Data()
+            Data(load = jsn)
             return
 
     os.mkdir('C:\\config')
