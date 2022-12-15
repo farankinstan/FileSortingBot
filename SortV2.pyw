@@ -80,9 +80,10 @@ def Create():
     os.mkdir('C:\\config')
 
     with open("C:\\config\\config.json", "w") as config:
+        Data()
         jsn = json.dumps(Directories, indent = 2)
         config.write(jsn)
-        Data()
+        
 
 def Sort():
 
